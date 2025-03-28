@@ -18,9 +18,7 @@
   
         <!-- Navigation Links -->
         <div class="flex space-x-6">
-          <NuxtLink to="/serial" class="text-white text-lg hover:text-gray-300">Register</NuxtLink>
-          <NuxtLink to="/download" class="text-white text-lg hover:text-gray-300">Download</NuxtLink>
-          <NuxtLink to="/support" class="text-white text-lg hover:text-gray-300">Support</NuxtLink>
+          <!-- Navigation links removed -->
         </div>
       </nav>
   
@@ -45,5 +43,3 @@
   
     </div>
   </template>
-  
-  

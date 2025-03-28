@@ -22,6 +22,11 @@
 
       <p v-if="error" class="text-red-400 text-lg mt-4">⚠️ {{ error }}</p>
       <p v-if="success" class="text-green-400 text-lg mt-4">✅ Valid serial! Redirecting...</p>
+      
+      <!-- Login Link for Existing Users -->
+      <p class="text-gray-300 mt-6">
+        Already have an account? <NuxtLink to="/login" class="text-primary hover:underline font-semibold">Log in here</NuxtLink>
+      </p>
     </div>
 
     <!-- Steps Section -->
@@ -59,25 +64,22 @@ async function validateSerial() {
     error.value = null;
     success.value = false;
 
-    const response = await $fetch('http://localhost:3000/api/serial/validate', {
+    // First validate the serial number and get a token
+    const response = await $fetch('/api/serial/token', {
       method: 'POST',
       body: { serial: serial.value },
     });
 
-    await response;
-
-    console.log(response.data);
-
     if (response.success) {
       success.value = true;
       setTimeout(() => {
-        router.push(`/auth?serial=${serial.value}`); // Redirects to authentication page with serial
+        router.push(`/auth?token=${response.token}`); // Redirects to authentication page with token
       }, 2000);
     } else {
       error.value = response.message || 'Invalid serial number';
     }
   } catch (err) {
-    error.value = err.data.message || 'An error occurred. Please try again.';
+    error.value = err.data?.message || 'An error occurred. Please try again.';
   }
 }
 </script>
